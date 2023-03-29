@@ -1,9 +1,3 @@
-#Copyright ©️ 2021 TeLe TiPs. All Rights Reserved
-#You are free to use this code in any of your project, but you MUST include the following in your README.md (Copy & paste)
-# ##Credits - [Countdown Timer Telegram bot by TeLe TiPs] (https://github.com/teletips/CountdownTimer-TeLeTiPs)
-
-# Changing the code is not allowed! Read GNU AFFERO GENERAL PUBLIC LICENSE: https://github.com/teletips/CountdownTimer-TeLeTiPs/blob/main/LICENSE
- 
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 import os
@@ -123,12 +117,12 @@ async def callback_query(client: Client, query: CallbackQuery):
         except MessageNotModified:
             pass    
 
-@bot.on_message(filters.command('set'))
+@bot.on_message(filters.command('set') & filters.group )
 async def set_timer(client, message):
     global stoptimer
     try:
-        if message.chat.id>0:
-            return await message.reply('⛔️ Try this command in a **group chat**.')
+        if message.chat.type == "private":
+            return await message.edit_text('⛔️ Try this command in a **group chat**.')
         elif not (await client.get_chat_member(message.chat.id,message.from_user.id)).privileges:
             return await message.reply('👮🏻‍♂️ Sorry, **only admins** can execute this command.')    
         elif len(message.command)<3:
@@ -205,5 +199,3 @@ async def stop_timer(Client, message):
 
 print("Countdown Timer is alive!")
 bot.run()
-
-#Copyright ©️ 2021 TeLe TiPs. All Rights Reserved
