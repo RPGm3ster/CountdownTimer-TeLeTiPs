@@ -140,36 +140,6 @@ async def set_timer(client, message):
         user_input_time = int(message.command[1])
         user_input_event = str(message.command[2])
         get_user_input_time = await bot.send_message(message.chat.id, user_input_event)
-        await get_user_input_time.pin()
-        
-        if stoptimer:
-            stoptimer = False
-        
-        if 0 < user_input_time <= 10:
-            while user_input_time and not stoptimer:
-                seconds = user_input_time % 60
-                if seconds < 10:
-                    seconds = "0" + str(seconds)
-                timer_msg = f"🕒 **Countdown:** `{user_input_time}:{seconds}`\n\n{user_input_event}"
-                try:
-                    await get_user_input_time.edit(timer_msg)
-                except FloodWait as e:
-                    await asyncio.sleep(e.x)
-                    await get_user_input_time.edit(timer_msg)
-                await asyncio.sleep(1)
-                user_input_time -= 1
-        
-        if not stoptimer:
-            await get_user_input_time.unpin()
-            await message.reply('🔔 Countdown ended.')
-    except Exception as e:
-        print(e)
-        await message.reply('❌ An error occurred while processing the command.')  
-        
-        
-        user_input_time = int(input("How long do you want your tip to be displayed in seconds? "))
-        user_input_event = str(message.command[2])
-        get_user_input_time = await bot.send_message(message.chat.id, user_input_event)
         await bot.send(UpdatePinnedMessage(
         channel_id=message.chat.id,
         id=get_user_input_time.message_id,
