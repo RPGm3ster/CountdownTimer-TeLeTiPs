@@ -167,7 +167,7 @@ async def set_timer(client, message):
         await message.reply('❌ An error occurred while processing the command.')  
         
         
-        user_input_time = int(message.command[1])
+        user_input_time = int(input("How long do you want your tip to be displayed in seconds? "))
         user_input_event = str(message.command[2])
         get_user_input_time = await bot.send_message(message.chat.id, user_input_event)
         await bot.send(UpdatePinnedMessage(
@@ -175,7 +175,6 @@ async def set_timer(client, message):
         id=get_user_input_time.message_id,
         flags=1
     ))
-        
         if stoptimer: stoptimer = False
         if user_input_time < 10:
                 while user_input_time and not stoptimer:
