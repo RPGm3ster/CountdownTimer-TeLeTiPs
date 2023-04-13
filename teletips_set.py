@@ -177,7 +177,7 @@ async def set_timer(client, message):
     ))
         
         if stoptimer: stoptimer = False
-        if 0<user_input_time<=10:
+        if user_input_time < 10:
                 while user_input_time and not stoptimer:
                     s=user_input_time%60
                     Countdown_TeLe_TiPs='{}\n\n⏳ {:02d}**s**\n\n<i>{}</i>'.format(user_input_event, s, footer_message)
@@ -185,7 +185,7 @@ async def set_timer(client, message):
                     await asyncio.sleep(1)
                     user_input_time -=1
                 await finish_countdown.edit("🚨 Beep! Beep!! **TIME'S UP!!!**")
-            elif 10<user_input_time<60:
+            elif 10 <= user_input_time <= 60:
                 while user_input_time>0 and not stoptimer:
                     s=user_input_time%60
                     Countdown_TeLe_TiPs='{}\n\n⏳ {:02d}**s**\n\n<i>{}</i>'.format(user_input_event, s, footer_message)   
