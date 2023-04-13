@@ -11,7 +11,7 @@ bot=Client(
     api_id = int(os.environ["API_ID"]),
     api_hash = os.environ["API_HASH"],
     bot_token = os.environ["BOT_TOKEN"],
-    channel_id =  os.environ["CHANNEL_ID"]
+    channel_id = int(os.environ["CHANNEL_ID"])
 )
 
 footer_message = os.environ["FOOTER_MESSAGE"]
