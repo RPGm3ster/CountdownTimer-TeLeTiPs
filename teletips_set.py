@@ -11,7 +11,7 @@ bot=Client(
     api_id = int(os.environ["API_ID"]),
     api_hash = os.environ["API_HASH"],
     bot_token = os.environ["BOT_TOKEN"],
-    channel_id = int(os.environ["CHANNEL_ID"])
+    channel_id=os.environ["CHANNEL_ID"]
 )
 
 footer_message = os.environ["FOOTER_MESSAGE"]
@@ -124,29 +124,28 @@ async def set_timer(client, message):
     try:
         chat_type = message.chat.type
         if chat_type == "private":
-            return await message.edit_text('⛔️ Try this command in a **group chat or channel**.')
-        
+                 return await message.reply('⛔️ You can only use this command in a group or channel.')
         if chat_type == "channel":
-            if message.chat.id != CHANNEL_ID:
+            if message.chat.id != message.chat.id:
                 return await message.edit_text('⛔️ You can only use this command in the specified channel.')
 
         member = await client.get_chat_member(message.chat.id, message.from_user.id)
         if not member.privileges:
             return await message.reply('👮🏻‍♂️ Sorry, **only admins** can execute this command.')    
         
-        if len(message.command) < 3:
-            return await message.reply('❌ **Incorrect format.**\n\n✅ Format should be like,\n<code> /set seconds "event"</code>\n\n**Example**:\n <code>/set 10 "10 seconds countdown"</code>')    
+        if len(message.command) <= 3:
+            return await message.reply('❌ **Incorrect format.**\n\n✅ Format should be like,\n<code> /set seconds "event"</code>\n\n**Example**:\n <code>/set 10 "10 seconds countdown"</code>')  
         
         user_input_time = int(message.command[1])
         user_input_event = str(message.command[2])
         get_user_input_time = await bot.send_message(message.chat.id, user_input_event)
-        await bot.send(UpdatePinnedMessage(
+        await bot.raw_send(UpdatePinnedMessage(
         channel_id=message.chat.id,
         id=get_user_input_time.message_id,
         flags=1
     ))
         if stoptimer: stoptimer = False
-        if user_input_time < 10:
+        if user_input_time <= 0:
                 while user_input_time and not stoptimer:
                     s=user_input_time%60
                     Countdown_TeLe_TiPs='{}\n\n⏳ {:02d}**s**\n\n<i>{}</i>'.format(user_input_event, s, footer_message)
